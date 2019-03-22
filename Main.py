@@ -1,7 +1,5 @@
 import re
-import ssl
-import urllib.request
-import requests
+
 
 #documento_programa_map = {1013678335: 2549}
 
@@ -16,7 +14,7 @@ documento_periodo_map = {}
 documento_edad_map = {}
 documento_nodo_map = {}
 documento_tipo_acceso_map = {}
-documento_tipo_subacceso_map = {}
+documento_tipo_subacceso_map = {}1013600424
 documento_correo_map = {}
 
 def get_expediente_programa(documento, historia_academica):
@@ -53,27 +51,6 @@ def get_expediente_programa2(documento, historia_academica):
 
 
 
-def make_req(sia_modifier, jsessionid, documento):
-    url = 'https://siabog.unal.edu.co/academia/apoyo-administrativo/mis-estudiantes/' \
-          + sia_modifier + ';jsessionid=' \
-          + jsessionid \
-          + '.websia1?documento=' \
-          + str(documento)
-
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-
-    req.set_proxy('proxy4.unal.edu.co:8080', 'http')
-
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    return str(urllib.request.urlopen(req, context=ctx).read())
 
 
 def get_datos_personales(jsessionid, documento):
@@ -273,32 +250,17 @@ def get_porcentaje(historia_academica):
         return '0.0%'
     return historia_academica[match.end(): match.end() + 5]
 
-def get_historia_academica_post(programa, expediente, documento, jsessionid):
-    url = 'https://siabog.unal.edu.co/academia/apoyo-administrativo/mis-estudiantes/' \
-          + 'historia-academica.do' + ';jsessionid=' \
-          + jsessionid \
-          + '.websia1?documento=' \
-          + str(documento)
 
-    req = urllib.request.Request(
-        url,
-        data=urllib.parse.urlencode({'plan': programa, 'expediente': expediente, 'documento': documento}).encode('ascii'),
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-
-    req.set_proxy('proxy4.unal.edu.co:8080', 'http')
-
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    return str(urllib.request.urlopen(req, context=ctx).read())
+def get_last_periodo(historia_academica):
+    match_string = 'academico\">[0-9|"\-"|"I"]+'
+    match = re.search(match_string, historia_academica)
+    #print(match)
+    return historia_academica[match.start() + 11 : match.end()]
 
 
 def main():
     for documento in documentos:
-        jsessionid = '8239D8E13DE87C5483EB7FCD780B830B'
+        jsessionid = 'DD6DEE09DB92FC240DB1536DA1DBCF9A'
 
         historia_academica = get_historia_academica(jsessionid, documento)
         programa_expediente = get_expediente_programa(documento, historia_academica)
@@ -306,7 +268,12 @@ def main():
         for dupla in programa_expediente.get(documento):
             if(dupla[0] == '2703'):
                 historia_academica = get_historia_academica_post(dupla[0], dupla[1], documento, jsessionid)
-                print(documento + "\t" + dupla[0] + "\t" + dupla[1] + "\t" + get_porcentaje(historia_academica))
+                print(documento, end = '\t')
+                print(dupla[0], end = '\t')
+                print(dupla[1], end = '\t')
+                print(get_porcentaje(historia_academica), end = '\t')
+                print(get_last_periodo(historia_academica), end = '')
+                print()
 
 
         #historia_academica = get_historia_academica(jsessionid, documento, documento_programa_map[documento])
