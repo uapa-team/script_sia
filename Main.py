@@ -1,8 +1,8 @@
-import urllib.request
-import ssl
 import re
+import ssl
+import urllib.request
+import requests
 
-#documentos = [676282, 1034312454, 1032504867, 1015483888, 1019153887, 1022444458, 1022422960, 1010247857, 1072675255, 1022446697, 1023978203, 1054094756, 1022446491, 1019150906, 1015483594, 1013676197, 1090532516, 1013690465, 1018514802, 1023972837, 1019150623, 1034314393, 1032507009, 1014307450, 1032506771, 1032506797, 1015484315, 1014302980, 1118576430, 1233893557, 1019153159, 1013688452, 1015477927, 1026599210, 1026598270, 1018495753, 1233896908, 1051955701, 1030699723, 1057413298, 1033815640, 1032504342, 1053617187, 1032502876, 1032508406, 1023977495, 1019153307, 1032505241, 1020844346, 1023970694, 1020843548, 1026600420, 1013691373, 1233909519, 1032506510, 1015484224, 1000514224, 1020843708, 1019153302, 1026303986, 1014308663, 1032508994, 1118576135, 1032508849, 1015474730, 1016112197, 1015483283, 1019146749, 1032487380, 1014309208, 1032506705, 1030700200, 1032506760, 1016112381, 1032508359, 1136889517, 1014309186, 1019153786, 1032495165, 1026306378, 1087213009, 1020845289, 1121873797, 1087007236, 1032507639, 1016112584, 1072673395, 1032493901, 1020843703, 1031182122]
 #documento_programa_map = {1013678335: 2549}
 
 documentos = [
@@ -11,13 +11,46 @@ documentos = [
 
 
 documento_programa_map = {}
-
+documentos_programa_expediente = {}
 documento_periodo_map = {}
 documento_edad_map = {}
 documento_nodo_map = {}
 documento_tipo_acceso_map = {}
 documento_tipo_subacceso_map = {}
 documento_correo_map = {}
+
+def get_expediente_programa(documento, historia_academica):
+    get_expediente_programa1(documento, historia_academica)
+    return get_expediente_programa2(documento, historia_academica)
+
+def get_expediente_programa1(documento, historia_academica):
+    match_string = 'plan=[0-9A-Z]*'
+    match = re.search(match_string, historia_academica)
+    plan = historia_academica[match.start() +5:match.end()]
+    match_string = 'expediente=[0-9A-Z]*'
+    match = re.search(match_string, historia_academica)
+    expediente = historia_academica[match.start() + 11:match.end()]
+    documentos_programa_expediente[documento] = []
+    documentos_programa_expediente[documento].append([plan, expediente])
+
+def get_expediente_programa2(documento, historia_academica):
+    match_string = str("doSubmitSelectorPlanes..'([0-9A-Z]*).....([0-9A-Z]*)")
+    omit = False
+    match = re.finditer(match_string, historia_academica)
+    for ma in match:
+        omit = not omit
+        if omit:
+            continue
+        #match_string1 = "'[A-Z0-9]*'"
+        #match1 = re.finditer(match_string1, historia_academica[ma.start():ma.end()])
+        #print(ma.group(1) + " " + ma.group(2))
+        #for i in match1:
+        #    print(i)
+        plan = ma.group(1)
+        expediente = ma.group(2)
+        documentos_programa_expediente[documento].append([plan, expediente])
+    return documentos_programa_expediente
+
 
 
 def make_req(sia_modifier, jsessionid, documento):
@@ -233,11 +266,48 @@ def get_ciudad_procedencia(datos_personales):
     end = int(match.end()) + start
     return datos_personales[start + 71:end]
 
+def get_porcentaje(historia_academica):
+    match_string = '<table class="progreso-porcentaje" border="0" cellspacing="0" cellpadding="0" width="'
+    match = re.search(match_string, historia_academica)
+    if(match is None):
+        return '0.0%'
+    return historia_academica[match.end(): match.end() + 5]
+
+def get_historia_academica_post(programa, expediente, documento, jsessionid):
+    url = 'https://siabog.unal.edu.co/academia/apoyo-administrativo/mis-estudiantes/' \
+          + 'historia-academica.do' + ';jsessionid=' \
+          + jsessionid \
+          + '.websia1?documento=' \
+          + str(documento)
+
+    req = urllib.request.Request(
+        url,
+        data=urllib.parse.urlencode({'plan': programa, 'expediente': expediente, 'documento': documento}).encode('ascii'),
+        headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+        }
+    )
+
+    req.set_proxy('proxy4.unal.edu.co:8080', 'http')
+
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    return str(urllib.request.urlopen(req, context=ctx).read())
+
 
 def main():
     for documento in documentos:
-        #print(documento)
-        jsessionid = 'D98C76CBB0209F9E1F3A9B92F753C14E'
+        jsessionid = '8239D8E13DE87C5483EB7FCD780B830B'
+
+        historia_academica = get_historia_academica(jsessionid, documento)
+        programa_expediente = get_expediente_programa(documento, historia_academica)
+
+        for dupla in programa_expediente.get(documento):
+            if(dupla[0] == '2703'):
+                historia_academica = get_historia_academica_post(dupla[0], dupla[1], documento, jsessionid)
+                print(documento + "\t" + dupla[0] + "\t" + dupla[1] + "\t" + get_porcentaje(historia_academica))
+
 
         #historia_academica = get_historia_academica(jsessionid, documento, documento_programa_map[documento])
 
