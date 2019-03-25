@@ -1,6 +1,8 @@
+from SIARetrieve.sia_parser.DatoPersParser import DatoPersParser
+
 class DatoPers:
     def __init__(self, dato_pers):
-        self.raw            = dato_pers
+        self.parser = DatoPersParser(dato_pers)
         self.calculate()
     
     def calculate(self):
@@ -12,13 +14,13 @@ class DatoPers:
 
     def calculate_resi(self):
         self.resi = {}
-        self.resi['dire']   = None
-        self.resi['muni']   = None
-        self.resi['pais']   = None
-        self.resi['tel1']   = None
-        self.resi['tel2']   = None
-        self.resi['tido']   = None
-        self.resi['depa']   = None
+        self.parser.get_resi_info_size()
+        self.resi['dire']   = self.parser.get_resi_dir()
+        self.resi['muni']   = self.parser.get_resi_muni()
+        self.resi['pais']   = self.parser.get_resi_pais()
+        self.resi['tel1']   = self.parser.get_resi_tel1()
+        self.resi['tel2']   = self.parser.get_resi_tel2()
+        self.resi['depa']   = self.parser.get_resi_depa()
 
     def calculate_naci(self):
         self.naci           = {}

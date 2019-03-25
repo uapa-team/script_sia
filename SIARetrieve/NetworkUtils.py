@@ -4,6 +4,7 @@ import requests
 import os
 import re
 from SIARetrieve import SIAInfo
+from SIARetrieve.sia_parser.SiaData import SiaData
 
 def data_validator(post_data):
     if not(post_data is None):
@@ -37,10 +38,6 @@ def get_login_ans(user, passw):
 
 def set_jsessionid():
     login_ans = get_login_ans(os.environ['SIAUSER'], os.environ['SIAPASS'])
-    match = re.search('[0-9|A-Z]*.web', str(login_ans))
-    if match is None:
-        SIAInfo.jsessionid = ''
-    else:
-        SIAInfo.jsessionid = login_ans[match.start() : match.end()-4]
+    SIAInfo.jsessionid = SiaData.get_jsessionid(login_ans)
 
 set_jsessionid()
