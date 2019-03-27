@@ -1,15 +1,14 @@
-import re
-from bs4 import BeautifulSoup
+from SIARetrieve.sia_parser.Parser import Parser
 
-class DatoPersParser:
+class DatoPersParser(Parser):
 
     def __init__(self, datos_per):
-        self.raw = datos_per
+        Parser.__init__(self, datos_per)
         self.data = []
         self.titulos = []
-        parsed = BeautifulSoup(datos_per, features="lxml")
-        datos = parsed.find_all(class_="cuerpo")
-        title = parsed.find_all(class_="titulo-2")
+        
+        datos = self.html.find_all(class_="cuerpo")
+        title = self.html.find_all(class_="titulo-2")
         for i in datos:
             self.data.append(i.text)
 

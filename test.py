@@ -1,6 +1,8 @@
 from SIARetrieve import sia
-from bs4 import BeautifulSoup
 
 
-soup = sia.get_dp_per("1000221830")
+soup = sia.get_ha_per("1000221830")
 #print(soup.proc)
+print(soup.parser.get_historias())
+print(soup.parser.get_programa())
+print(soup.parser.get_expediente())
