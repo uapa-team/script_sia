@@ -6,15 +6,24 @@ class DatoPers:
         self.calculate()
     
     def calculate(self):
+        self.calculate_proc()
         self.calculate_resi()
         self.calculate_naci()
         self.calculate_siad()
         self.calculate_salu()
         self.calculate_hist_acad()
 
+    def calculate_proc(self):
+        self.proc = {}
+        self.proc['dire']   = self.parser.get_proc_dir()
+        self.proc['muni']   = self.parser.get_proc_muni()
+        self.proc['pais']   = self.parser.get_proc_pais()
+        self.proc['tel1']   = self.parser.get_proc_tel1()
+        self.proc['tel2']   = self.parser.get_proc_tel2()
+        self.proc['depa']   = self.parser.get_proc_depa()
+
     def calculate_resi(self):
         self.resi = {}
-        self.parser.get_resi_info_size()
         self.resi['dire']   = self.parser.get_resi_dir()
         self.resi['muni']   = self.parser.get_resi_muni()
         self.resi['pais']   = self.parser.get_resi_pais()
