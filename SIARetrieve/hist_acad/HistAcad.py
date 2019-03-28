@@ -1,4 +1,6 @@
 from SIARetrieve.sia_parser.HistAcadParser import HistAcadParser
+from SIARetrieve.hist_acad.Periodo import Periodo
+from SIARetrieve.hist_acad.Materia import Materia
 
 class HistAcad:
     def __init__(self, hist_acad):
@@ -10,8 +12,11 @@ class HistAcad:
         self.calculate()
     
     def calculate(self):
-        JSON = self.parser.get_info() 
-        for i in JSON:
-            print(i)
-            for j in JSON[i]:
-                print(j + " " + str(JSON[i][j]))
+        infoJSON = self.parser.get_info() 
+        for periodo in infoJSON:
+            P = Periodo(periodo)
+            self.periodos.append(P)
+
+            for materia in infoJSON[periodo]:
+                M = Materia(materia, infoJSON[periodo][materia][0], infoJSON[periodo][materia][1], infoJSON[periodo][materia][2], infoJSON[periodo][materia][3])
+                P.materias.append(M)

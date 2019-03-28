@@ -4,7 +4,7 @@ class Periodo:
         self.materias = []
 
     def __str__(self):
-        string = periodo  + " "
-        for m in materias:
-            string += str(m) + " "
+        string = self.periodo  + "\n"
+        for m in self.materias:
+            string += str(m) + "\n"
         return string

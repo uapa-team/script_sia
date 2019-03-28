@@ -52,4 +52,5 @@ class HistAcadParser(Parser):
                 periodoJSON[periodos[i].text][subdata[0].text] = [subdata[1].text, subdata[5].text, subdata[6].text, subdata[9].text]
 
         return periodoJSON
+
                 
