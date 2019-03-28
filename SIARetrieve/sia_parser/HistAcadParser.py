@@ -53,4 +53,10 @@ class HistAcadParser(Parser):
 
         return periodoJSON
 
-                
+        def get_resumen(self):
+            resumen = {}
+
+            res = self.html.find(id="resumen-academico")
+
+
+            return resumen
