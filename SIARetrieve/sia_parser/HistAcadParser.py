@@ -36,4 +36,20 @@ class HistAcadParser(Parser):
             expediente = ma.group(2)
             historias.append([plan, expediente])
         return historias
-        
+
+    def get_info(self):
+        periodoJSON = {}
+
+        periodos = self.html.find_all(class_="periodo-academico")
+        notas = self.html.find_all(id="calificaciones")
+
+        for i in range(len(periodos)):
+            periodoJSON[periodos[i].text] = {}
+            data = notas[i].find_all("tr")
+            data = data[1:]
+            for j in data:
+                subdata = j.find_all("span")
+                periodoJSON[periodos[i].text][subdata[0].text] = [subdata[1].text, subdata[5].text, subdata[6].text, subdata[9].text]
+
+        return periodoJSON
+                

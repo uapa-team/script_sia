@@ -10,4 +10,8 @@ class HistAcad:
         self.calculate()
     
     def calculate(self):
-        print("calculating")
+        JSON = self.parser.get_info() 
+        for i in JSON:
+            print(i)
+            for j in JSON[i]:
+                print(j + " " + str(JSON[i][j]))

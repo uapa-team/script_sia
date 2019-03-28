@@ -4,7 +4,7 @@ from SIARetrieve.hist_acad.HistAcad import HistAcad
 from SIARetrieve.dato_pers.DatoPers import DatoPers
 
 def build_data(prog, exped):
-    return {'programa':prog, 'exped':exped}
+    return {'plan':prog, 'expediente':exped}
 
 def get_ha_prog(prog, exped, dni_per):
     post_data = build_data(prog, exped)
