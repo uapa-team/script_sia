@@ -76,7 +76,11 @@ class HistAcadParser(Parser):
                 # subdata[5].text = tipología de la asignatura
                 # subdata[6].text = número de créditos de la asignatura
                 # subdata[9].text = nota que se tuvo la materia
-                periodoJSON[periodos[i].text][subdata[0].text] = [subdata[1].text, subdata[5].text, subdata[6].text, subdata[9].text]
+                # Se hace el if porque cuando subdata es de tamaño 10 es porque estamos en un programa posterior al 2008
+                if(len(subdata) ==10):
+                    periodoJSON[periodos[i].text][subdata[0].text] = [subdata[1].text, subdata[5].text, subdata[6].text, subdata[9].text]
+                else:
+                    periodoJSON[periodos[i].text][subdata[0].text] = [subdata[1].text, subdata[5].text, subdata[7].text, subdata[8].text]
 
         return periodoJSON
 
@@ -86,27 +90,39 @@ class HistAcadParser(Parser):
         res = self.html.find(id="resumen-academico")
 
         promedios = res.find_all(class_="total-grande")
-        resumen["PA"] = promedios[0].text[1:4]
-        resumen["PAPA"] = promedios[1].text[1:4]
-        resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        if len(promedios) > 1:
+            resumen["PA"] = promedios[0].text[1:4]
+            resumen["PAPA"] = promedios[1].text[1:4] 
+            resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        else:
+            resumen["PA"] = "---"
+            resumen["PAPA"] = "---" 
+            resumen["%"] = "---"
 
-        filas_creditos = res.find_all("tr")
+        filas_creditos = self.find_coincidence(res.find_all("tr"), "lft")[1:]
         resumen["creditos"] = {}
-        ignore = True
         for f in filas_creditos:
-            nombre = f.find(class_="lft")
-            if nombre is not None:
-                if not ignore: #TODO: hacer esto mas elegante
-                    data = f.find_all("td")[1:]
-                    if len(data) == 2:
-                        data = data[0:1]
-                    
-                    resumen["creditos"][nombre.text] = [d.text for d in data]
-                else:
-                    ignore = False
+            data = f.find_all("td")
+            if len(data) == 3:
+                resumen["creditos"][data[0].text] = data[1].text
+            else:
+                resumen["creditos"][data[0].text] = [d.text for d in data[1:]]
+                
 
         data = res.find_all(class_="total2")[5:7]
-        resumen["creditos"]["Total Créditos Excedentes"] = data[0].text
-        resumen["creditos"]["Total de Créditos Cancelados en los Periodos Cursados"] = data[1].text
+        if len(data) > 0:
+            resumen["creditos"]["Total Créditos Excedentes"] = data[0].text
+            resumen["creditos"]["Total de Créditos Cancelados en los Periodos Cursados"] = data[1].text
 
         return resumen
+
+    #Toma un arreglo de datos extraidos con bs4.find_all()
+    #y retorna solo las que contengan almenos una etiqueta con clase @_class
+    def find_coincidence(self, src, class_):
+        result = []
+
+        for i in src:
+            if i.find(class_=class_):
+                result.append(i)
+
+        return result
