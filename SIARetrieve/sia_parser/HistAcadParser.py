@@ -1,7 +1,7 @@
 import re
 from SIARetrieve.sia_parser.Parser import Parser
 
-#HistAcadParser es una clase, hija de Parser
+# HistAcadParser es una clase, hija de Parser
 class HistAcadParser(Parser):
     
     # Es el constructor donde se parsea el html recibido al hacer la petición de la historia académica
