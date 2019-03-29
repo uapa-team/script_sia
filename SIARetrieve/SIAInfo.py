@@ -17,7 +17,7 @@ def get_sia_url(sia_modifier, dni_per):
     return sia_url \
           + sia_modifier + ';jsessionid=' \
           + jsessionid \
-          + '.websia2?documento=' \
+          + '.websia1?documento=' \
           + str(dni_per)
 
 # Función que devuelve la url con la que se hace la petición para sacar el jsessionid
