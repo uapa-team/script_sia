@@ -1,11 +1,5 @@
-from SIARetrieve import sia
+from Persona import Persona
 
+p = Persona("1000221830")
 
-ha = sia.get_ha_prog("2545", "0", "1000221830")
-
-print(ha.parser.get_resumen())
-
-#print(ha.proc)
-#print(ha.parser.get_historias())
-#print(ha.parser.get_programa())
-#print(ha.parser.get_expediente())
+print(p.ha[0])

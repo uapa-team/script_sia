@@ -1,6 +1,7 @@
 from SIARetrieve.sia_parser.HistAcadParser import HistAcadParser
 from SIARetrieve.hist_acad.Periodo import Periodo
 from SIARetrieve.hist_acad.Materia import Materia
+from SIARetrieve.hist_acad.Resumen import Resumen
 
 class HistAcad:
     def __init__(self, hist_acad):
@@ -28,3 +29,6 @@ class HistAcad:
 
     def calculate_resumen(self):
         infoJSON = self.parser.get_resumen()
+        self.resumen = Resumen(infoJSON["PA"], infoJSON["PAPA"], infoJSON["creditos"])
+
+        #TODO: Crear las llaves de creditos sin valor por --- 

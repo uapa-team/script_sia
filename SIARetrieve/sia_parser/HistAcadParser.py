@@ -59,9 +59,14 @@ class HistAcadParser(Parser):
         res = self.html.find(id="resumen-academico")
 
         promedios = res.find_all(class_="total-grande")
-        resumen["PA"] = promedios[0].text[1:4]
-        resumen["PAPA"] = promedios[1].text[1:4]
-        resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        if len(promedios) > 1:
+            resumen["PA"] = promedios[0].text[1:4]
+            resumen["PAPA"] = promedios[1].text[1:4] 
+            resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        else:
+            resumen["PA"] = "---"
+            resumen["PAPA"] = "---" 
+            resumen["%"] = "---"
 
         filas_creditos = res.find_all("tr")
         resumen["creditos"] = {}
@@ -79,7 +84,8 @@ class HistAcadParser(Parser):
                     ignore = False
 
         data = res.find_all(class_="total2")[5:7]
-        resumen["creditos"]["Total Créditos Excedentes"] = data[0].text
-        resumen["creditos"]["Total de Créditos Cancelados en los Periodos Cursados"] = data[1].text
+        if len(data) > 0:
+            resumen["creditos"]["Total Créditos Excedentes"] = data[0].text
+            resumen["creditos"]["Total de Créditos Cancelados en los Periodos Cursados"] = data[1].text
 
         return resumen

@@ -15,11 +15,6 @@ class DatoPersParser(Parser):
         for i in title:
             self.titulos.append(i.text)
 
-        print("0 " + self.data[0])
-        
-        for i in range(len(self.titulos)):
-            print(str(i+1) + " " + self.titulos[i] + " - " + self.data[i+1])
-
     def get_dni(self):
         return self.data[0].split('\\')[0]
 
