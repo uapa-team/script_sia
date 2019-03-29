@@ -61,25 +61,31 @@ class HistAcadParser(Parser):
         promedios = res.find_all(class_="total-grande")
         resumen["PA"] = promedios[0].text[1:4]
         resumen["PAPA"] = promedios[1].text[1:4]
-        resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        resumen["%"] = res.find(class_="texto-porcentaje").text[0:-1]
 
-        filas_creditos = res.find_all("tr")
+        filas_creditos = self.find_coincidence(res.find_all("tr"), "lft")[1:]
         resumen["creditos"] = {}
-        ignore = True
         for f in filas_creditos:
-            nombre = f.find(class_="lft")
-            if nombre is not None:
-                if not ignore: #TODO: hacer esto mas elegante
-                    data = f.find_all("td")[1:]
-                    if len(data) == 2:
-                        data = data[0:1]
-                    
-                    resumen["creditos"][nombre.text] = [d.text for d in data]
-                else:
-                    ignore = False
+            data = f.find_all("td")
+            if len(data) == 3:
+                resumen["creditos"][data[0].text] = data[1].text
+            else:
+                resumen["creditos"][data[0].text] = [d.text for d in data[1:]]
+                
 
         data = res.find_all(class_="total2")[5:7]
         resumen["creditos"]["Total Créditos Excedentes"] = data[0].text
         resumen["creditos"]["Total de Créditos Cancelados en los Periodos Cursados"] = data[1].text
 
         return resumen
+
+    #Toma un arreglo de datos extraidos con bs4.find_all()
+    #y retorna solo las que contengan almenos una etiqueta con clase @_class
+    def find_coincidence(self, src, class_):
+        result = []
+
+        for i in src:
+            if i.find(class_=class_):
+                result.append(i)
+
+        return result
