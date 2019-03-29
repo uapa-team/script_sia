@@ -1,4 +1,4 @@
-import Persona
+from Persona import Persona
 
 p = Persona("1000221830")
 
