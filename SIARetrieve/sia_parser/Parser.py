@@ -8,3 +8,4 @@ class Parser:
     # lxml es el lenguaje con el que se está parseando las respuestas del sia
     def __init__(self, raw):
         self.html = BeautifulSoup(raw, features="lxml")
+        self.raw = raw
