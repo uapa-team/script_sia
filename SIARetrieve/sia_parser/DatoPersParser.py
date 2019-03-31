@@ -4,21 +4,7 @@ class DatoPersParser(Parser):
 
     def __init__(self, datos_per):
         Parser.__init__(self, datos_per)
-        self.data = []
-        self.titulos = []
-        
-        datos = self.html.find_all(class_="cuerpo")
-        title = self.html.find_all(class_="titulo-2")
-        for i in datos:
-            self.data.append(i.text)
-
-        for i in title:
-            self.titulos.append(i.text)
-
-        print("0 " + self.data[0])
-        
-        for i in range(len(self.titulos)):
-            print(str(i+1) + " " + self.titulos[i] + " - " + self.data[i+1])
+        self.data = [d.text for d in self.html.find_all(class_="cuerpo")]
 
     def get_dni(self):
         return self.data[0].split('\\')[0]
@@ -119,4 +105,18 @@ class DatoPersParser(Parser):
     def get_eps(self):
         return self.data[32].split('\\')[0]
 
-    #TODO: Hacer para N historias academicas
+    def get_ha(self):
+        subdata = self.data[33:]
+        ha = {}
+        for i in range(0, len(subdata), 6):
+            programa = subdata[i+1].split('\\')[0]
+            codigo_p = programa.split(" | ")[0]
+            ha[codigo_p] = {}
+            ha[codigo_p]["estado"]      = subdata[i].split('\\')[0]
+            ha[codigo_p]["programa"]    = programa
+            ha[codigo_p]["nivel"]       = subdata[i+2].split('\\')[0]
+            ha[codigo_p]["codigo"]      = subdata[i+3].split('\\')[0]
+            ha[codigo_p]["p_ingreso"]   = subdata[i+4].split('\\')[0]
+            ha[codigo_p]["t_ingreso"]   = subdata[i+5].split('\\')[0]
+
+        return ha
