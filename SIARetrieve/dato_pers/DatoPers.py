@@ -11,10 +11,10 @@ class DatoPers:
     def __str__(self):
         string = ""
         for dic in self.data:
-            for dato in dic:
+            for dato in self.data[dic]:
                 string += self.data[dic][dato] + "\t"
         
-        return string
+        return string + "\n"
 
     def get_hist_acad(self):
         string = ""
