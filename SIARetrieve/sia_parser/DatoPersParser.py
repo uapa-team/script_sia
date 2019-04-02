@@ -7,7 +7,6 @@ class DatoPersParser(Parser):
     # recibe ha que es el html de la historia academica
     def __init__(self, datos_per):
         Parser.__init__(self, datos_per)
-
         # En el arreglo datos se guardan todas las etiquetas cuya clase se llame titulo-2
         # en este arreglo se quiere guardar todos los titulos de los datos personales de la persona ej: Ciudad o municipio, País, Telefono
         self.titulos = [i.text for i in self.html.find_all(class_="titulo-2")]
@@ -147,4 +146,18 @@ class DatoPersParser(Parser):
     def get_eps(self):
         return self.data[32].split('\\')[0]
 
-    #TODO: Hacer para N historias academicas
+    def get_ha(self):
+        subdata = self.data[33:]
+        ha = {}
+        for i in range(0, len(subdata), 6):
+            programa = subdata[i+1].split('\\')[0]
+            codigo_p = programa.split(" | ")[0]
+            ha[codigo_p] = {}
+            ha[codigo_p]["estado"]      = subdata[i].split('\\')[0]
+            ha[codigo_p]["programa"]    = programa
+            ha[codigo_p]["nivel"]       = subdata[i+2].split('\\')[0]
+            ha[codigo_p]["codigo"]      = subdata[i+3].split('\\')[0]
+            ha[codigo_p]["p_ingreso"]   = subdata[i+4].split('\\')[0]
+            ha[codigo_p]["t_ingreso"]   = subdata[i+5].split('\\')[0]
+
+        return ha
