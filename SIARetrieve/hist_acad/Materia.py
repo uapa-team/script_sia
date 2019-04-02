@@ -14,4 +14,4 @@ class Materia:
         self.nota = nota
 
     def __str__(self):
-        return self.codigo + " " + self.nombre
+        return self.codigo + "\t" + self.grupo + "\t" + self.tipologia + "\t" + self.creditos + "\t" + self.nota

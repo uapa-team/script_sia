@@ -8,11 +8,11 @@ def build_data(prog, exped):
 
 def get_ha_prog(prog, exped, dni_per):
     post_data = build_data(prog, exped)
-    hist_acad = HistAcad(NetworkUtils.make_request(SIAInfo.sia_hist_acad, dni_per, post_data))
+    hist_acad = HistAcad(NetworkUtils.make_request(SIAInfo.sia_hist_acad, dni_per, post_data), dni_per)
     return hist_acad
 
 def get_ha_per(dni_per):
-    return HistAcad(NetworkUtils.make_request(SIAInfo.sia_hist_acad, dni_per, None))
+    return HistAcad(NetworkUtils.make_request(SIAInfo.sia_hist_acad, dni_per, None), dni_per)
 
 def get_dp_per(dni_per):
     return DatoPers(NetworkUtils.make_request(SIAInfo.sia_dato_pers, dni_per, None))

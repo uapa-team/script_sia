@@ -4,14 +4,22 @@ from .Materia import Materia
 from .Resumen import Resumen
 
 class HistAcad:
-    def __init__(self, hist_acad):
+    def __init__(self, hist_acad, dni):
         self.parser = HistAcadParser(hist_acad)
         self.programa = self.parser.get_programa()
         self.historias = self.parser.get_historias()
         self.periodos = []
+        self.dni = dni
 
         self.calculate()
 
+    def __str__(self):
+        string = ""
+        for periodo in self.periodos:
+            for materia in periodo.materias:
+                string += self.dni + "\t" + self.programa + "\t" + periodo.periodo + "\t" + str(materia) + "\n"
+
+        return string
 
     def calculate(self):
         self.calculate_ha()
