@@ -87,3 +87,9 @@ local_settings.py
 
 .env
 db.sqlite3
+
+### idea ###
+.idea
+
+### test.py ###
+test.py
