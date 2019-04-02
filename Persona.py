@@ -15,5 +15,4 @@ class Persona:
         self.ha.append(sia.get_ha_per(self.dni))
 
         for h in self.ha[0].historias:
-            print(h[0])
             self.ha.append(sia.get_ha_prog(h[0], h[1], self.dni))
