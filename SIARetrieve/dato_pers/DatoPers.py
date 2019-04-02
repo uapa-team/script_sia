@@ -4,8 +4,28 @@ class DatoPers:
     def __init__(self, dato_pers):
         self.parser = DatoPersParser(dato_pers)
         self.data = {}
+        self.ha = {}
 
         self.calculate()
+
+    def __str__(self):
+        string = ""
+        for dic in self.data:
+            for dato in dic:
+                string += self.data[dic][dato] + "\t"
+        
+        return string
+
+    def get_hist_acad(self):
+        string = ""
+        for historia in self.ha:
+            string += self.data["gen"]["dni"] + "\t" + historia
+            for dato in self.ha[historia]:
+                string += self.ha[historia][dato] + "\t"
+            string += "\n"
+        
+        return string
+
     
     def calculate(self):
         self.calculate_gen()
