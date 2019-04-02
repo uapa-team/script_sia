@@ -1,8 +1,8 @@
 import os
 import ssl
 import urllib.request
-from SIARetrieve import SIAInfo
-from SIARetrieve.sia_parser.SiaData import SiaData
+from . import SIAInfo
+from .sia_parser.SiaData import SiaData
 
 # Recibe post_data que es un diccionario con el Form Data necesario para hacer la petición
 # este diccionario se convierte en un json usando la codificación ascii

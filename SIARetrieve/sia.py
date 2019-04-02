@@ -1,7 +1,7 @@
-from SIARetrieve import NetworkUtils
-from SIARetrieve import SIAInfo
-from SIARetrieve.hist_acad.HistAcad import HistAcad
-from SIARetrieve.dato_pers.DatoPers import DatoPers
+from . import NetworkUtils
+from . import SIAInfo
+from .hist_acad.HistAcad import HistAcad
+from .dato_pers.DatoPers import DatoPers
 
 def build_data(prog, exped):
     return {'plan':prog, 'expediente':exped}

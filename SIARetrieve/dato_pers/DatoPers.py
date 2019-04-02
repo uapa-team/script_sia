@@ -1,4 +1,4 @@
-from SIARetrieve.sia_parser.DatoPersParser import DatoPersParser
+from ..sia_parser.DatoPersParser import DatoPersParser
 
 class DatoPers:
     def __init__(self, dato_pers):

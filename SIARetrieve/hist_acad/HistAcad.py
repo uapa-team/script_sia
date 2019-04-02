@@ -1,7 +1,7 @@
-from SIARetrieve.sia_parser.HistAcadParser import HistAcadParser
-from SIARetrieve.hist_acad.Periodo import Periodo
-from SIARetrieve.hist_acad.Materia import Materia
-from SIARetrieve.hist_acad.Resumen import Resumen
+from ..sia_parser.HistAcadParser import HistAcadParser
+from .Periodo import Periodo
+from .Materia import Materia
+from .Resumen import Resumen
 
 class HistAcad:
     def __init__(self, hist_acad):

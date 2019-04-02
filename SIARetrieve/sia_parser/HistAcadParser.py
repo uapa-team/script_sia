@@ -1,5 +1,5 @@
 import re
-from SIARetrieve.sia_parser.Parser import Parser
+from .Parser import Parser
 
 # HistAcadParser es una clase, hija de Parser
 class HistAcadParser(Parser):

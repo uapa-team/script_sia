@@ -1,4 +1,4 @@
-from SIARetrieve.sia_parser.Parser import Parser
+from .Parser import Parser
 
 # DatoPersParser es una clase, hija de Parser
 class DatoPersParser(Parser):
