@@ -39,5 +39,5 @@ class Resumen:
             for d in self.infocreditos[i]:
                 string += d + "\t"
 
-        return string
+        return string + "\n"
 
