@@ -37,6 +37,5 @@ class HistAcad:
 
     def calculate_resumen(self):
         infoJSON = self.parser.get_resumen()
-        self.resumen = Resumen(infoJSON["PA"], infoJSON["PAPA"], infoJSON["creditos"])
+        self.resumen = Resumen(self.dni, self.programa, infoJSON["PA"], infoJSON["PAPA"], infoJSON["creditos"])
 
-        #TODO: Crear las llaves de creditos sin valor por --- 

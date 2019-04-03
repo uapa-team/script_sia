@@ -19,7 +19,7 @@ class DatoPers:
     def get_hist_acad(self):
         string = ""
         for historia in self.ha:
-            string += self.data["gen"]["dni"] + "\t" + historia
+            string += self.data["gen"]["dni"] + "\t" + historia + "\t"
             for dato in self.ha[historia]:
                 string += self.ha[historia][dato] + "\t"
             string += "\n"

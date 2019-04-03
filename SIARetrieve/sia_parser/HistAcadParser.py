@@ -84,6 +84,9 @@ class HistAcadParser(Parser):
 
         return periodoJSON
 
+
+    #Retorna un diccionario con los datos contenidos en el cuadro de resumen-academico
+    #Los valores devueltos en creditos son todos arreglos
     def get_resumen(self):
         resumen = {}
 
@@ -104,7 +107,7 @@ class HistAcadParser(Parser):
         for f in filas_creditos:
             data = f.find_all("td")
             if len(data) == 3:
-                resumen["creditos"][data[0].text] = data[1].text
+                resumen["creditos"][data[0].text] = [data[1].text]
             else:
                 resumen["creditos"][data[0].text] = [d.text for d in data[1:]]
                 
