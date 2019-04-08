@@ -21,13 +21,9 @@ def get_sia_url(sia_modifier, dni_per):
           + str(dni_per)
 
 def get_sia_url_mat(cod_mat):
-    return 'https://siabog.unal.edu.co/academia/apoyo-administrativo/ConsultaContenidos.do;jsessionid=' \
-           + jsessionid + \
-           '.websia1?action=Info&idAsignatura=' \
-           '2027985' \
-           '&idSession_hd=' \
-           + jsessionid + \
-           '.websia1&txtIdAsignatura=&txtNombreAsignatura='
+    return 'https://siabog.unal.edu.co/academia/apoyo-administrativo/ConsultaContenidos.do?action=Info&idAsignatura=' \
+           + str(cod_mat) + \
+           '&idSession_hd=&txtIdAsignatura=&txtNombreAsignatura='
 
 # Función que devuelve la url con la que se hace la petición para sacar el jsessionid
 def get_sia_url_login():
