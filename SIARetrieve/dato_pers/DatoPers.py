@@ -56,6 +56,7 @@ class DatoPers:
         proc['tel1'] = self.parser.get_proc_tel1()
         proc['tel2'] = self.parser.get_proc_tel2()
         proc['depa'] = self.parser.get_proc_depa()
+        proc['tipo_dom'] = self.parser.get_tipo_dom()
         
         self.data["proc"] = proc
 

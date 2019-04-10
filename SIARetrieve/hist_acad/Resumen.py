@@ -14,11 +14,12 @@ class Resumen:
     __llaves["Total Créditos Excedentes"] = ["---"]
     __llaves["Total de Créditos Cancelados en los Periodos Cursados"] = ["---"]
 
-    def __init__(self, dni, programa, PA, PAPA, infocreditos):
+    def __init__(self, dni, programa, PA, PAPA, porc, infocreditos):
         self.dni = dni
         self.programa = programa
         self.PA = PA
         self.PAPA = PAPA
+        self.porc = porc
         self.infocreditos = infocreditos
 
         self.fill_infocreditos()
@@ -34,7 +35,7 @@ class Resumen:
 
 
     def __str__(self):
-        string = self.dni + "\t" + self.programa + "\t" + self.PA + "\t" + self.PAPA + "\t"
+        string = self.dni + "\t" + self.programa + "\t" + self.PA + "\t" + self.PAPA + "\t" + self.porc + "\t"
         for i in self.infocreditos:
             for d in self.infocreditos[i]:
                 string += d + "\t"
