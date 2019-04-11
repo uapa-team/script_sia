@@ -1,5 +1,6 @@
 from .SIARetrieve import sia
 
+
 class EstudianteSia:
 
     def __init__(self, dni):
@@ -9,7 +10,6 @@ class EstudianteSia:
         self.ha = []
 
         self.__get_all_ha()
-
 
     def __get_all_ha(self):
         self.ha.append(sia.get_ha_per(self.dni))

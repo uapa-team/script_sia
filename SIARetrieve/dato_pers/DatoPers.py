@@ -1,5 +1,6 @@
 from ..sia_parser.DatoPersParser import DatoPersParser
 
+
 class DatoPers:
     def __init__(self, dato_pers):
         self.parser = DatoPersParser(dato_pers)
@@ -25,7 +26,6 @@ class DatoPers:
             string += "\n"
         
         return string
-
     
     def calculate(self):
         self.calculate_gen()
@@ -46,7 +46,6 @@ class DatoPers:
         gen['pais']    = self.parser.get_pais()
         
         self.data["gen"] = gen
-
 
     def calculate_proc(self):
         proc = {}
@@ -107,4 +106,4 @@ class DatoPers:
         self.data["salu"] = salu
 
     def calculate_hist_acad(self):
-        self.ha  = self.parser.get_ha()          
+        self.ha  = self.parser.get_ha()

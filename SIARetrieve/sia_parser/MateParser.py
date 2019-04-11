@@ -1,5 +1,6 @@
 from .Parser import Parser
 
+
 # DatoPersParser es una clase, hija de Parser
 class MateParser(Parser):
 

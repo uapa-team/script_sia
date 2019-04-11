@@ -1,5 +1,6 @@
 from .Parser import Parser
 
+
 # DatoPersParser es una clase, hija de Parser
 class DatoPersParser(Parser):
 
@@ -8,10 +9,12 @@ class DatoPersParser(Parser):
     def __init__(self, datos_per):
         Parser.__init__(self, datos_per)
         # En el arreglo datos se guardan todas las etiquetas cuya clase se llame titulo-2
-        # en este arreglo se quiere guardar todos los titulos de los datos personales de la persona ej: Ciudad o municipio, País, Telefono
+        # en este arreglo se quiere guardar todos los titulos de los datos personales de la persona
+        # ej: Ciudad o municipio, País, Telefono
         self.titulos = [i.text for i in self.html.find_all(class_="titulo-2")]
         # En el arreglo datos se guardan todas las etiquetas cuya clase se llame cuerpo
-        # en este arreglo se quiere guardar todos los valores de los datos personales de la persona ej: Bogota d.c, Colombia, 1234567
+        # en este arreglo se quiere guardar todos los valores de los datos personales de la persona
+        # ej: Bogota d.c, Colombia, 1234567
         self.data = [i.text for i in self.html.find_all(class_="cuerpo")]
 
     # Este método devuelve el dni
