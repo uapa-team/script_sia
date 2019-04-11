@@ -36,6 +36,12 @@ def make_request(sia_modifier, dni_per, post_data):
     ctx         = build_context()
     return str(urllib.request.urlopen(req, context=ctx).read())
 
+def make_request_mat(cod_materia):
+    url         = SIAInfo.get_sia_url_mat(cod_materia)
+    req = build_request(url, None, SIAInfo.headers_sia)
+    ctx = build_context()
+    return str(urllib.request.urlopen(req, context=ctx).read())
+
 # En esta función se hace la petición para obtener el html que contiene el jsessionid
 # recibe el usuario del sia y la contraseña
 # retorna un string con la respuesta de la petición, la respuesta es un html
