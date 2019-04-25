@@ -7,157 +7,306 @@ class DatoPersParser(Parser):
     # recibe ha que es el html de la historia academica
     def __init__(self, datos_per):
         Parser.__init__(self, datos_per)
-        # En el arreglo datos se guardan todas las etiquetas cuya clase se llame titulo-2
-        # en este arreglo se quiere guardar todos los titulos de los datos personales de la persona ej: Ciudad o municipio, País, Telefono
-        self.titulos = [i.text for i in self.html.find_all(class_="titulo-2")]
-        # En el arreglo datos se guardan todas las etiquetas cuya clase se llame cuerpo
-        # en este arreglo se quiere guardar todos los valores de los datos personales de la persona ej: Bogota d.c, Colombia, 1234567
-        self.data = [i.text for i in self.html.find_all(class_="cuerpo")]
+        
+        self.calculate_gen()
+        self.calculate_proc()
+        self.calculate_resi()
+        self.calculate_naci()
+        self.calculate_mili()
+        self.calculate_siad()
+        self.calculate_salu()
+        self.calculate_ha()
+
+    def calculate_gen(self): 
+        try:
+            self.gen = [i.text.split('\\')[0] for i in self.html.find(id="id-persona").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.gen = []
+
+    def calculate_proc(self):
+        try:
+            self.proc = [i.text.split('\\')[0] for i in self.html.find(id="procedencia").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.proc = []
+
+    def calculate_resi(self):
+        try:
+            self.resi = [i.text.split('\\')[0] for i in self.html.find(id="residencia").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.resi = []
+
+    def calculate_naci(self):
+        try:
+            self.naci = [i.text.split('\\')[0] for i in self.html.find(id="nacimiento").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.naci = []
+
+    def calculate_mili(self):
+        try:
+            self.mili = [i.text.split('\\')[0] for i in self.html.find(id="libreta").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.mili = []
+
+    def calculate_siad(self):
+        try:
+            self.siad = [i.text.split('\\')[0] for i in self.html.find(id="acceso").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.siad = []
+
+    def calculate_salu(self):
+        try:
+            self.salu = [i.text.split('\\')[0] for i in self.html.find(id="salud").find_all(class_="cuerpo")]
+        except AttributeError:
+            self.salu = []
+
+
+    # Este método calcula el diccionario con las diferentes historias academicas del estudiante
+    def calculate_ha(self):
+        data = self.html.find(id="academicos").find_all(id="dato")
+        self.hist_acad = {}
+        for ha in data:
+            subdata = [i.text.split('\\')[0] for i in ha.find_all(class_="cuerpo")]
+            programa = subdata[1].split(" | ")[0]
+
+            self.hist_acad[programa] = {}
+            self.hist_acad[programa]["estado"]      = subdata[0]
+            self.hist_acad[programa]["programa"]    = subdata[1]
+            self.hist_acad[programa]["nivel"]       = subdata[2]
+            self.hist_acad[programa]["codigo"]      = subdata[3]
+            self.hist_acad[programa]["p_ingreso"]   = subdata[4]
+            self.hist_acad[programa]["t_ingreso"]   = subdata[5]
 
     # Este método devuelve el dni
     def get_dni(self):
-        return self.data[0].split('\\')[0]
+        try:
+            return self.gen[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el sexo
     def get_sexo(self):
-        return self.data[1].split('\\')[0]
+        try:    
+            return self.gen[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la edad
     def get_edad(self):
-        return self.data[2].split(' ')[0]
+        try:    
+            return self.gen[2].split(' ')[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el estado civil
     def get_estado_civil(self):
-        return self.data[3].split('\\')[0]
+        try:    
+            return self.gen[3]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el pais de su nacionalidad
     def get_pais(self):
-        return self.data[4].split('\\')[0]
+        try:    
+            return self.gen[4]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la dirección de procedencia
     def get_proc_dir(self):
-        return self.data[5].split('\\')[0]
+        try:    
+            return self.proc[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el tipo de domicilio, ej: urbano
     def get_tipo_dom(self):
-        return self.data[6].split('\\')[0]
+        try:    
+            return self.proc[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el municipio de procedencia
     def get_proc_muni(self):
-        return self.data[7].split('\\')[0]
+        try:    
+            return self.proc[2]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el departamento de procedencia
     def get_proc_depa(self):
-        return self.data[8].split('\\')[0]
+        try:    
+            return self.proc[3]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el país de procedencia
     def get_proc_pais(self):
-        return self.data[9].split('\\')[0]
+        try:    
+            return self.proc[4]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el teléfono de la dirección de residencia
     def get_proc_tel1(self):
-        return self.data[10].split('\\')[0]
+        try:    
+            return self.proc[5]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el otro teléfono de la dirección de residencia
     def get_proc_tel2(self):
-        return self.data[11].split('\\')[0]
+        try:    
+            return self.proc[6]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la dirección de residencia
     def get_resi_dir(self):
-        return self.data[12].split('\\')[0]
+        try:    
+            return self.resi[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el municipio de residencia
     def get_resi_muni(self):
-        return self.data[13].split('\\')[0]
+        try:    
+            return self.resi[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el departamento de residencia
     def get_resi_depa(self):
-        return self.data[14].split('\\')[0]
+        try:    
+            return self.resi[2]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el país de residencia
     def get_resi_pais(self):
-        return self.data[15].split('\\')[0]
+        try:    
+            return self.resi[3]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el teléfono de residencia
     def get_resi_tel1(self):
-        return self.data[16].split('\\')[0]
+        try:    
+            return self.resi[4]
+        except IndexError:
+            return "---"
 
     # Este método devuelve otro teléfono de residencia
     def get_resi_tel2(self):
-        return self.data[17].split('\\')[0]
+        try:    
+            return self.resi[5]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la fecha de nacimiento
     def get_naci_fecha(self):
-        return self.data[18].split('\\')[0]
+        try:    
+            return self.naci[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el municipio de nacimiento
     def get_naci_muni(self):
-        return self.data[19].split('\\')[0]
+        try:    
+            return self.naci[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el departamento de nacimiento
     def get_naci_depa(self):
-        return self.data[20].split('\\')[0]
+        try:    
+            return self.naci[2]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el país de nacimiento
     def get_naci_pais(self):
-        return self.data[21].split('\\')[0]
+        try:    
+            return self.naci[3]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el país de la nacionalidad
     def get_nacionalidad(self):
-        return self.data[22].split('\\')[0]
+        try:    
+            return self.naci[4]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el número de la libreta militar
     def get_mili_numero(self):
-        return self.data[23].split('\\')[0]
+        try:    
+            return self.mili[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la clase de la libreta militar
     def get_mili_clase(self):
-        return self.data[24].split('\\')[0]
+        try:    
+            return self.mili[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el distrito militar
     def get_mili_distri(self):
-        return self.data[25].split('\\')[0]
+        try:    
+            return self.mili[2]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la situación en cuanto a la libreta militar
     def get_mili_situacion(self):
-        return self.data[26].split('\\')[0]
+        try:    
+            return self.mili[3]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el usuario del sia
     def get_usuario(self):
-        return self.data[27].split('\\')[0]
+        try:    
+            return self.siad[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el correo de la unal
     def get_correo_unal(self):
-        return self.data[28].split('\\')[0]
+        try:    
+            return self.siad[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve un correo alterno
     def get_correo_alterno(self):
-        return self.data[29].split('\\')[0]
+        try:    
+            return self.siad[2]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el grupo sanguíneo
     def get_grupo_sanguineo(self):
-        return self.data[30].split('\\')[0]
+        try:    
+            return self.salu[0]
+        except IndexError:
+            return "---"
 
     # Este método devuelve el rh
     def get_rh(self):
-        return self.data[31].split('\\')[0]
+        try:    
+            return self.salu[1]
+        except IndexError:
+            return "---"
 
     # Este método devuelve la eps
     def get_eps(self):
-        return self.data[32].split('\\')[0]
+        try:    
+            return self.salu[2]
+        except IndexError:
+            return "---"
 
+    # Este método devuelve las historias academicas
     def get_ha(self):
-        subdata = self.data[33:]
-        ha = {}
-        for i in range(0, len(subdata), 6):
-            programa = subdata[i+1].split('\\')[0]
-            codigo_p = programa.split(" | ")[0]
-            ha[codigo_p] = {}
-            ha[codigo_p]["estado"]      = subdata[i].split('\\')[0]
-            ha[codigo_p]["programa"]    = programa
-            ha[codigo_p]["nivel"]       = subdata[i+2].split('\\')[0]
-            ha[codigo_p]["codigo"]      = subdata[i+3].split('\\')[0]
-            ha[codigo_p]["p_ingreso"]   = subdata[i+4].split('\\')[0]
-            ha[codigo_p]["t_ingreso"]   = subdata[i+5].split('\\')[0]
-
-        return ha
+        return self.hist_acad
