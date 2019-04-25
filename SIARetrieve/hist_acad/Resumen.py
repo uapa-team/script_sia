@@ -32,6 +32,8 @@ class Resumen:
                     self.infocreditos[k].append("---")
             except KeyError:
                 self.infocreditos[k] = Resumen.__llaves[k]
+            except Exception:
+                self.infocreditos[k] = "---"
 
 
     def __str__(self):
