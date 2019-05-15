@@ -6,10 +6,11 @@ jsessionid      = '06616586AF5E9C2B910FD8C677966090'
 # es decir si se quiere ver la historia académica o los datos personales
 sia_hist_acad   = 'historia-academica.do'
 sia_dato_pers   = 'datos-personales.do'
+sia_horario     = 'horario.do'
 # Son los headers que avisan al SIA que versión AppleWebKit se está usando
 # para que el SIA piense que la petición se está haciendo desde un navegador y no desde una consola
 headers_sia     = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko)'
-                                 'Chrome/35.0.1916.47 Safari/537.36'}
+                                 ' Chrome/35.0.1916.47 Safari/537.36'}
 
 
 # Constructor de la url a la que se le va a hacer la petición al SIA

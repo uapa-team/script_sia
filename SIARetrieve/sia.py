@@ -3,10 +3,11 @@ from . import SIAInfo
 from .hist_acad.HistAcad import HistAcad
 from .dato_pers.DatoPers import DatoPers
 from .mate_info.Materia import Materia
+from .horario.Horario import Horario
 
 
 def build_data(prog, exped):
-    return {'plan':prog, 'expediente':exped}
+    return {'plan': prog, 'expediente': exped}
 
 
 def get_ha_prog(prog, exped, dni_per):
@@ -25,3 +26,7 @@ def get_dp_per(dni_per):
 
 def get_mat_info(cod_materia):
     return Materia(NetworkUtils.make_request_mat(cod_materia))
+
+
+def get_horario(dni_per):
+    return Horario(NetworkUtils.make_request(SIAInfo.sia_horario, dni_per, None))

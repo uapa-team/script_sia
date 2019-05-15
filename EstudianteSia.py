@@ -8,6 +8,7 @@ class EstudianteSia:
 
         self.dp = sia.get_dp_per(self.dni)
         self.ha = []
+        self.horario = sia.get_horario(self.dni)
 
         self.__get_all_ha()
 

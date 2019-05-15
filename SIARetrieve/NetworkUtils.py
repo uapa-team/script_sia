@@ -18,7 +18,7 @@ def data_validator(post_data):
 # Construye la petición, recibe una url, un Form Data y unos headers
 # retorna un objeto url request
 def build_request(url, data, headers):
-    req = urllib.request.Request(url,data,headers)
+    req = urllib.request.Request(url, data, headers)
     return req
 
 

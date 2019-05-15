@@ -1,4 +1,16 @@
 from .Parser import Parser
+import re
+
+
+class MateriaHorario:
+    def __init__(self, codigo, grupo, nombre, horario, edif_salon, docente, creditos):
+        self.codigo = codigo
+        self.grupo = grupo
+        self.nombre = nombre
+        self.horario = horario
+        self.edif_salon = edif_salon
+        self.docente = docente
+        self.creditos = creditos
 
 
 class HorarioParser(Parser):
@@ -13,25 +25,16 @@ class HorarioParser(Parser):
         # En el arreglo datos se guardan todas las etiquetas cuya clase se llame cuerpo
         # en este arreglo se quiere guardar todos los valores de los datos personales de la persona
         # ej: Bogota d.c, Colombia, 1234567
-        self.data = [i.text for i in self.html.find_all(class_="cuerpo")]
+        self.data = [i.text for i in self.html.find_all(valign="top")]
 
-    def get_codigo(self):
-        return self.data[0].split('\\')[0]
-
-    def get_grupo(self):
-        return self.data[0].split('\\')[0]
-
-    def get_nombre_asignatura(self):
-        return self.data[0].split('\\')[0]
-
-    def get_horario(self):
-        return self.data[0].split('\\')[0]
-
-    def get_edif_salon(self):
-        return self.data[0].split('\\')[0]
-
-    def get_docente(self):
-        return self.data[0].split('\\')[0]
-
-    def get_creditos(self):
-        return self.data[0].split('\\')[0]
+    def get_asignaturas(self):
+        #match = re.search("([0-9]+[.B]* - [0-9]*)", str(self.data))
+        #return match.group()
+        cod_assig = []
+        for i in self.data:
+            match = re.search("([0-9]+.* - [0-9]*)", str(i))
+            try:
+                cod_assig.append(match.group())
+            except:
+                pass
+        return cod_assig
