@@ -32,7 +32,7 @@ class HorarioParser(Parser):
         #return match.group()
         cod_assig = []
         for i in self.data:
-            match = re.search("([0-9]+.* - [0-9]*)", str(i))
+            match = re.search("([0-9]+(.B)* - [0-9]+)", str(i))
             try:
                 cod_assig.append(match.group())
             except:
