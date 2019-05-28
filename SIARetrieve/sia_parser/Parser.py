@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 
+
 # Es la super clase que parsea los html recibidos en las peticiones hechas
 class Parser:
 

@@ -43,4 +43,3 @@ class Resumen:
                 string += d + "\t"
 
         return string + "\n"
-

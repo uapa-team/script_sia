@@ -3,6 +3,8 @@ from .Periodo import Periodo
 from .Materia import Materia
 from .Resumen import Resumen
 
+
+# noinspection PyAttributeOutsideInit
 class HistAcad:
     def __init__(self, hist_acad, dni):
         self.parser = HistAcadParser(hist_acad)
