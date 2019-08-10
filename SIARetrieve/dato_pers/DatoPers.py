@@ -40,6 +40,7 @@ class DatoPers:
     def calculate_gen(self):
         gen = {}
         gen['dni']     = self.parser.get_dni()
+        gen['name']    = self.parser.get_name()
         gen['sexo']    = self.parser.get_sexo()
         gen['edad']    = self.parser.get_edad()
         gen['est_civ'] = self.parser.get_estado_civil()

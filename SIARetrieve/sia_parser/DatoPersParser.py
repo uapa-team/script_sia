@@ -80,8 +80,15 @@ class DatoPersParser(Parser):
     # Este método devuelve el dni
     def get_dni(self):
         try:
-            return self.gen[0]
+            return self.gen[0].split('.')[1]
         except IndexError:
+            return "---"
+
+    # Este método devuelve el nombre
+    def get_name(self):
+        try:
+            return self.html.find(class_="identificador").text
+        except Exception:
             return "---"
 
     # Este método devuelve el sexo
