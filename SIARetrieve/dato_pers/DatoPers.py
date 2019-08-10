@@ -51,12 +51,12 @@ class DatoPers:
     def calculate_proc(self):
         proc = {}
         proc['dire'] = self.parser.get_proc_dir()
+        proc['tipo_dom'] = self.parser.get_tipo_dom()
         proc['muni'] = self.parser.get_proc_muni()
+        proc['depa'] = self.parser.get_proc_depa()
         proc['pais'] = self.parser.get_proc_pais()
         proc['tel1'] = self.parser.get_proc_tel1()
         proc['tel2'] = self.parser.get_proc_tel2()
-        proc['depa'] = self.parser.get_proc_depa()
-        proc['tipo_dom'] = self.parser.get_tipo_dom()
         
         self.data["proc"] = proc
 
@@ -64,10 +64,10 @@ class DatoPers:
         resi = {}
         resi['dire']   = self.parser.get_resi_dir()
         resi['muni']   = self.parser.get_resi_muni()
+        resi['depa']   = self.parser.get_resi_depa()
         resi['pais']   = self.parser.get_resi_pais()
         resi['tel1']   = self.parser.get_resi_tel1()
         resi['tel2']   = self.parser.get_resi_tel2()
-        resi['depa']   = self.parser.get_resi_depa()
 
         self.data["resi"] = resi
 
