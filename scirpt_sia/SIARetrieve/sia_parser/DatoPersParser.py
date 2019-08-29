@@ -92,59 +92,59 @@ class DatoPersParser(Parser):
 
     # Este método devuelve el municipio de nacimiento
     def get_naci_muni(self):
-        return self.data[19].split('\\')[0]
+        return self.data[19].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve el departamento de nacimiento
     def get_naci_depa(self):
-        return self.data[20].split('\\')[0]
+        return self.data[20].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve el país de nacimiento
     def get_naci_pais(self):
-        return self.data[21].split('\\')[0]
+        return self.data[21].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve el país de la nacionalidad
     def get_nacionalidad(self):
-        return self.data[22].split('\\')[0]
+        return self.data[22].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve el número de la libreta militar
     def get_mili_numero(self):
-        return self.data[23].split('\\')[0]
+        return self.data[23].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve la clase de la libreta militar
     def get_mili_clase(self):
-        return self.data[24].split('\\')[0]
+        return self.data[24].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve el distrito militar
     def get_mili_distri(self):
-        return self.data[25].split('\\')[0]
+        return self.data[25].split('\\')[0] if len(self.data) > 19 else ''
 
     # Este método devuelve la situación en cuanto a la libreta militar
     def get_mili_situacion(self):
-        return self.data[26].split('\\')[0]
+        return self.data[26].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve el usuario del sia
     def get_usuario(self):
-        return self.data[27].split('\\')[0]
+        return self.data[27].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve el correo de la unal
     def get_correo_unal(self):
-        return self.data[28].split('\\')[0]
+        return self.data[28].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve un correo alterno
     def get_correo_alterno(self):
-        return self.data[29].split('\\')[0]
+        return self.data[29].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve el grupo sanguíneo
     def get_grupo_sanguineo(self):
-        return self.data[30].split('\\')[0]
+        return self.data[30].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve el rh
     def get_rh(self):
-        return self.data[31].split('\\')[0]
+        return self.data[31].split('\\')[0] if len(self.data) > 26 else ''
 
     # Este método devuelve la eps
     def get_eps(self):
-        return self.data[32].split('\\')[0]
+        return self.data[32].split('\\')[0] if len(self.data) > 32 else ''
 
     def get_ha(self):
         subdata = self.data[33:]
