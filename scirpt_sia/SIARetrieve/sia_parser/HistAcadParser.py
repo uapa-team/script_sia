@@ -106,6 +106,10 @@ class HistAcadParser(Parser):
             resumen["PA"] = promedios[0].text[1:4]
             resumen["PAPA"] = promedios[1].text[1:4] 
             resumen["%"] = res.find_all(class_="texto-porcentaje")[0].text[0:-1]
+        elif len(promedios) == 1:
+            resumen['PA'] = promedios[0].text[3:6]
+            resumen["PAPA"] = "---" 
+            resumen["%"] = "---"
         else:
             resumen["PA"] = "---"
             resumen["PAPA"] = "---" 

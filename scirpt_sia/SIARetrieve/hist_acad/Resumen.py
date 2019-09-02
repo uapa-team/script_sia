@@ -28,8 +28,9 @@ class Resumen:
     def fill_infocreditos(self):
         for k in Resumen.__llaves:
             try:
-                for i in range(len(self.infocreditos[k]), len(Resumen.__llaves[k])):
-                    self.infocreditos[k].append("---")
+                for _ in range(len(self.infocreditos[k]), len(Resumen.__llaves[k])):
+                    if type(self.infocreditos[k]) == list:
+                        self.infocreditos[k].append("---")
             except KeyError:
                 self.infocreditos[k] = Resumen.__llaves[k]
             except Exception:
