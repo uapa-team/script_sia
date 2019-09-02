@@ -20,7 +20,7 @@ def get_sia_url(sia_modifier, dni_per):
     return sia_url \
           + sia_modifier + ';jsessionid=' \
           + jsessionid \
-          + '.websia2?documento=' \
+          + '.websia1?documento=' \
           + str(dni_per)
 
 
